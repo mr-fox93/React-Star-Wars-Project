@@ -1,21 +1,17 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
+import { Route, Routes } from "react-router-dom";
+import Characters from "./pages/Characters";
+import Menu from "./pages/Menu";
 
 function App() {
   return (
     <>
       <Navbar />
-      <div className="img-div">
-        <div className="div">
-          <img className="imgg" src="/1.png" alt="img" />
-        </div>
-        <div className="div">
-          <img className="imgg" src="/2.png" alt="img" />
-        </div>
-        <div className="div">
-          <img className="imgg" src="/3.png" alt="img" />
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<Menu />} />
+        <Route path="/characters" element={<Characters />} />
+      </Routes>
     </>
   );
 }

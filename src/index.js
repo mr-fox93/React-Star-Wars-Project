@@ -4,31 +4,20 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "semantic-ui-css/semantic.min.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Characters from "./pages/Characters";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/characters",
-    element: <Characters />,
-  },
-]);
-
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
