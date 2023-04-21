@@ -8,7 +8,7 @@ const Navbar = () => {
       <Container>
         <Menu.Item as={Link} to="/" name=" Star Wars API"></Menu.Item>
         <Menu.Item as={Link} to="/characters" name="People"></Menu.Item>
-        <Menu.Item name="Planets"></Menu.Item>
+        <Menu.Item as={Link} to="/planets" name="Planets"></Menu.Item>
         <Menu.Item name=" Movies"></Menu.Item>
         <Menu.Item name=" Species"></Menu.Item>
         <Menu.Item name="Vechicles"></Menu.Item>
