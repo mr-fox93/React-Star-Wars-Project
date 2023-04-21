@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Icon, Label, Menu, Table } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import "./Characters.css";
 
@@ -67,11 +68,15 @@ const Planets = () => {
               <Table.Cell>{character.name}</Table.Cell>
               <Table.Cell>{character.gender}</Table.Cell>
               <Table.Cell>
-                {
-                  <button onClick={() => deleteCharacter(character)}>
-                    DELETE
-                  </button>
-                }
+                <Button
+                  onClick={() => deleteCharacter(character)}
+                  animated="vertical"
+                >
+                  <Button.Content hidden>Delete</Button.Content>
+                  <Button.Content visible>
+                    <Icon name="delete" />
+                  </Button.Content>
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}

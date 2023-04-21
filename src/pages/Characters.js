@@ -4,13 +4,14 @@ import { Input } from "semantic-ui-react";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { Button, Modal } from "semantic-ui-react";
 //import { Button, Popup } from "semantic-ui-react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import "./Characters.css";
 
 const Characters = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState("");
   //const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   const { data, isLoading, error } = useQuery(["people", page], () =>
@@ -18,6 +19,26 @@ const Characters = () => {
       res.json()
     )
   );
+  const deleteCharacterMutation = useMutation(
+    (characterToDelete) => {
+      const updatedResults = data.results.filter(
+        (character) => character !== characterToDelete
+      );
+      queryClient.setQueryData(["people", page], {
+        ...data,
+        results: updatedResults,
+      });
+    },
+    {
+      onSuccess: () => {
+        //refetch();
+      },
+    }
+  );
+
+  const deleteCharacter = (characterToDelete) => {
+    deleteCharacterMutation.mutate(characterToDelete);
+  };
 
   if (isLoading)
     return (
@@ -57,11 +78,12 @@ const Characters = () => {
             <Table.HeaderCell>Height</Table.HeaderCell>
             <Table.HeaderCell>Brith Day</Table.HeaderCell>
             <Table.HeaderCell>More info</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {filtredItems.map((character) => (
-            <Table.Row key={character.id}>
+            <Table.Row key={character.url}>
               <Table.Cell>{character.name}</Table.Cell>
               <Table.Cell>{character.gender}</Table.Cell>
               <Table.Cell>{character.height}</Table.Cell>
@@ -92,12 +114,23 @@ const Characters = () => {
                   </Modal.Actions>
                 </Modal>
               </Table.Cell>
+              <Table.Cell>
+                <Button
+                  onClick={() => deleteCharacter(character)}
+                  animated="vertical"
+                >
+                  <Button.Content hidden>Delete</Button.Content>
+                  <Button.Content visible>
+                    <Icon name="delete" />
+                  </Button.Content>
+                </Button>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
         <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell colSpan="5">
+            <Table.HeaderCell colSpan="6">
               <Menu floated="right" pagination>
                 <Menu.Item
                   as="a"
