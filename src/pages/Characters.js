@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Icon, Label, Menu, Table } from "semantic-ui-react";
+import { Icon, Menu, Table } from "semantic-ui-react";
 import { Input } from "semantic-ui-react";
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { Button, Modal } from "semantic-ui-react";
